@@ -1,0 +1,45 @@
+[build-system]
+requires = ["setuptools", "wheel"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "error-reporter"
+version = "0.0.0"
+description = "A lightweight fastapi library for reporting application errors and exceptions to external application."
+readme = "README.md"
+requires-python = ">=3.10"
+license = { text = "MIT" }
+keywords = [
+    "error",
+    "report"
+]
+authors = [
+    { name = "Seungkyu-Han", email = "trust1204@gmail.com" }
+]
+dependencies = [
+    "fastapi>=0.110.0"
+]
+
+[dependency-groups]
+githu-actions = [
+
+]
+
+[project.urls]
+"Homepage" = "https://github.com/Seungkyu-Han/error-reporter-python"
+"Bug Tracker" = "https://github.com/Seungkyu-Han/error-reporter-python/issues"
+"Documentation" = "https://github.com/Seungkyu-Han/error-reporter-python#readme"
+"Source" = "https://github.com/Seungkyu-Han/error-reporter-python"
+
+[tool.pytest.ini_options]
+testpaths = ["tests"]
+asyncio_mode = "auto"
+
+
+[tool.black]
+line-length = 100
+target-version = ['py310', 'py311']
+
+
+[tool.setuptools]
+packages = ["error_reporter"]
