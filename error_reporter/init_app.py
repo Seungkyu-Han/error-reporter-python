@@ -7,5 +7,5 @@ from .error_reporter_options import SlackOptions, DiscordOptions
 
 
 def init_error_reporter(app: FastAPI, options: Union[SlackOptions, DiscordOptions]):
-    app.state.error_reporter_client = get_client(options)
+    setattr(app.state, 'error_reporter_client', get_client(options)) # type: ignore[attr-defined]
     app.middleware('http')(error_reporter_filter)

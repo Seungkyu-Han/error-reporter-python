@@ -1,9 +1,8 @@
 from typing import Union
 
-from error_reporter import DiscordOptions, SlackOptions
 from error_reporter.core.core_client import CoreClient
-from error_reporter.core.helper.error_message_format_helper import ErrorMessageFormatHelper
-from error_reporter.error_reporter_options import GoogleChatOptions, GithubOptions
+from error_reporter.core.error_message_format_helper import ErrorMessageFormatHelper
+from error_reporter.error_reporter_options import GoogleChatOptions, GithubOptions, SlackOptions, DiscordOptions
 
 
 def get_client(

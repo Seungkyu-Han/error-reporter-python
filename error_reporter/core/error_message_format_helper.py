@@ -7,7 +7,7 @@ from error_reporter.types.message_builder_option import MessageBuilderOption
 
 class ErrorMessageFormatHelper:
 
-    def __init__(self, server_name: str | None):
+    def __init__(self, server_name: str = None):
         self._server_name: str = server_name or "unknown server"
 
     def error_message(

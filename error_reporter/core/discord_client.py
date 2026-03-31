@@ -4,7 +4,7 @@ import aiohttp
 import certifi
 
 from error_reporter.core.core_client import CoreClient
-from error_reporter.core.helper.error_message_format_helper import ErrorMessageFormatHelper
+from error_reporter.core.error_message_format_helper import ErrorMessageFormatHelper
 from error_reporter.types.message_builder_option import MessageBuilderOption
 
 logger = logging.getLogger(__name__)
