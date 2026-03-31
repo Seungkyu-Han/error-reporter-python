@@ -3,12 +3,12 @@ from typing import Union
 from error_reporter import DiscordOptions, SlackOptions
 from error_reporter.core.core_client import CoreClient
 from error_reporter.core.helper.error_message_format_helper import ErrorMessageFormatHelper
+from error_reporter.error_reporter_options import GoogleChatOptions, GithubOptions
 
 
 def get_client(
         options: Union[SlackOptions]
 ) -> CoreClient:
-
     error_message_format_helper = ErrorMessageFormatHelper(
         server_name=options.server_name,
     )
@@ -28,6 +28,26 @@ def get_client(
 
         return DiscordClient(
             webhook_url=options.webhook_url,
+            error_message_format_helper=error_message_format_helper,
+        )
+
+    elif isinstance(options, GoogleChatOptions):
+
+        from error_reporter.core.google_chat_client import GoogleChatClient
+
+        return GoogleChatClient(
+            webhook_url=options.webhook_url,
+            error_message_format_helper=error_message_format_helper,
+        )
+
+    elif isinstance(options, GithubOptions):
+
+        from error_reporter.core.github_client import GithubClient
+
+        return GithubClient(
+            github_token=options.github_token,
+            owner=options.owner,
+            repository=options.repository,
             error_message_format_helper=error_message_format_helper,
         )
 

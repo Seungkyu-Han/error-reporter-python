@@ -11,3 +11,9 @@ class DiscordOptions(BaseModel):
 class GoogleChatOptions(BaseModel):
     webhook_url: str
     server_name: str = "unknown server"
+
+class GithubOptions(BaseModel):
+    github_token: str
+    owner: str
+    repository: str
+    server_name: str = "unknown server"
