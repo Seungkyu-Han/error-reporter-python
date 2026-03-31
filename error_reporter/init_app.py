@@ -1,12 +1,11 @@
+from typing import Union
 from fastapi import FastAPI
 
-from error_reporter.core.core_client import CoreClient
 from error_reporter.service.error_reporter_filter import error_reporter_filter
 from error_reporter.service.error_reporter_service_container import get_client
-from error_reporter.types.error_reporter_options import ErrorReporterOptions
+from .error_reporter_options import SlackOptions, DiscordOptions
 
-core_client: CoreClient
 
-def init_error_reporter(app: FastAPI, options: ErrorReporterOptions):
+def init_error_reporter(app: FastAPI, options: Union[SlackOptions, DiscordOptions]):
     app.state.error_reporter_client = get_client(options)
     app.middleware('http')(error_reporter_filter)
