@@ -6,7 +6,7 @@ from error_reporter.error_reporter_options import GoogleChatOptions, GithubOptio
 
 
 def get_client(
-        options: Union[SlackOptions]
+        options: Union[SlackOptions, DiscordOptions, GoogleChatOptions, GithubOptions]
 ) -> CoreClient:
     error_message_format_helper = ErrorMessageFormatHelper(
         server_name=options.server_name,
