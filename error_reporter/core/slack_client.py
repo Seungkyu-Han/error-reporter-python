@@ -28,7 +28,9 @@ class SlackClient(CoreClient):
                         json={"text": send_message},
                         headers={"content-Type": "application/json"}
                 ) as response:
-                    if response.status >= 400:
+                    if 200 <= response.status < 300:
+                        logger.info("error_reporter send error success")
+                    elif response.status >= 400:
                         logger.error("Slack send failed: status=%s", response.status)
 
         except Exception as ex:
