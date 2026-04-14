@@ -1,5 +1,4 @@
 import logging
-import aiohttp
 
 from error_reporter.core.core_client import CoreClient
 from error_reporter.core.error_message_format_helper import ErrorMessageFormatHelper
@@ -41,14 +40,18 @@ class GithubClient(CoreClient):
             "X-GitHub-Api-Version": "2026-03-10",
         }
 
-        session = await self._get_session()
+        client = await self._get_client()
 
-        async with session.get(url, headers=headers, ssl=self._ssl_context) as response:
-            if response.status != 200:
-                if response.status == 404:
-                    raise Exception("GitHub Not Found: Invalid repository or owner")
-                else:
-                    raise Exception(f"GitHub API Error: {response.status}")
+        response = await client.get(
+            url,
+            headers=headers,
+        )
+
+        if not response.is_success:
+            if response.status_code == 404:
+                raise Exception("GitHub Not Found: Invalid repository or owner")
+            else:
+                raise Exception(f"GitHub API Error: {response.status_code}")
 
     async def report(self, message_builder_option: MessageBuilderOption):
         url = f"https://api.github.com/repos/{self._owner}/{self._repository}/issues"
@@ -67,31 +70,25 @@ class GithubClient(CoreClient):
             "labels": ["bug"],
         }
 
-        session = await self._get_session()
+        client = await self._get_client()
 
-        try:
-            async with session.post(
-                    url,
-                    headers=headers,
-                    json=payload,
-                    ssl=self._ssl_context,
-            ) as response:
+        response = await client.post(
+            url,
+            headers=headers,
+            json=payload,
+        )
 
-                if response.status >= 400:
-                    error_body = await response.text()
+        if not response.is_success:
 
-                    if response.status == 403:
-                        logging.error(
-                            "ErrorReporter: Insufficient permissions or rate limit exceeded, Please check your github token"
-                        )
-                    elif response.status == 404:
-                        logging.error(
-                            "ErrorReporter: Invalid repository or owner"
-                        )
-                    else:
-                        logging.error(
-                            f"ErrorReporter: {response.status}: {error_body}"
-                        )
-
-        except Exception as error:
-            raise error
+            if response.status_code == 403:
+                logging.error(
+                    "ErrorReporter: Insufficient permissions or rate limit exceeded, Please check your github token"
+                )
+            elif response.status_code == 404:
+                logging.error(
+                    "ErrorReporter: Invalid repository or owner"
+                )
+            else:
+                logging.error(
+                    f"ErrorReporter: {response.status_code}"
+                )
