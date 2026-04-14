@@ -17,14 +17,8 @@ class ErrorMessageFormatHelper:
         method = message_builder_option.method
         path = message_builder_option.path
         ip = message_builder_option.ip
-        body = message_builder_option.body
         error = message_builder_option.error
         stack = message_builder_option.stack
-
-        try:
-            body_content = json.dumps(body, indent=2) if body is not None else 'None'
-        except Exception:
-            body_content = 'None (Serialization Failed)'
 
         stack_content = (
             "\n".join(stack.split("\n")) + "\n..."
@@ -41,10 +35,6 @@ class ErrorMessageFormatHelper:
 - *IP:* `{ip}`
 - *Timestamp:* `{datetime.now().isoformat()}`
 
-*📦 Request Body*
-```json
-{body_content}
-```
 ❌ Error Message
 {error}
 

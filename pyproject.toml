@@ -17,7 +17,9 @@ authors = [
     { name = "Seungkyu-Han", email = "trust1204@gmail.com" }
 ]
 dependencies = [
-    "fastapi>=0.110.0"
+    "fastapi>=0.135.2",
+    "aiohttp>=3.13.4",
+    "certifi>=2026.2.25"
 ]
 
 [dependency-groups]

@@ -21,7 +21,7 @@ async def error_reporter_filter(request: Request, call_next):
     except Exception as exception:
 
         method: str = request.method
-        path: str = request.url.path
+        path: str = str(request.url)
 
         x_forwarded_for = request.headers.get("x-forwarded-for")
 
@@ -30,8 +30,7 @@ async def error_reporter_filter(request: Request, call_next):
         else:
             ip = request.client.host
 
-        body_bytes = await request.body()
-        body = body_bytes.decode("utf-8", errors="ignore")
+
 
         error = str(exception)
 
@@ -41,7 +40,6 @@ async def error_reporter_filter(request: Request, call_next):
             method=method,
             path=path,
             ip=ip,
-            body=body,
             error=error,
             stack=stack
         )

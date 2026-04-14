@@ -1,8 +1,6 @@
 .idea/**
 .idea
 
-.coverage
-
 .dist/**
 
 error_reporter.egg-info/**
